@@ -1,3 +1,10 @@
+# netlify.toml
+
+# Этот раздел настраивает ваши Edge Functions
 [[edge_functions]]
+# Путь, по которому будет применяться эта Edge Function.
+# "/*" означает, что она будет срабатывать на все запросы к вашему сайту.
 path = "/*"
+# Имя вашей Edge Function, соответствует имени файла JavaScript без расширения .js
+# Убедитесь, что этот файл находится в папке netlify/edge-functions/
 function = "check-referer-v2"
