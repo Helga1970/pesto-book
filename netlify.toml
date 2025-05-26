@@ -1,12 +1,6 @@
 [build]
   publish = "."
-  functions = "netlify/edge-functions"
 
 [[edge_functions]]
   path = "/*"
-  function = "check-referer-v2"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  function = "check-referer"
