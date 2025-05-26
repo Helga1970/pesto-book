@@ -1,6 +1,32 @@
-<html><head><meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><link href="style.css" rel="stylesheet" type="text/css" /><title>The Pesto Cookbook</title></head><body><div class="calibre" id="calibre_link-0">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>The Pesto Cookbook</title>
 
+    <script>
+        // Отключение правой кнопки мыши
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            // alert('Копирование и сохранение запрещены!'); // Можно включить, чтобы уведомить пользователя
+        });
 
+        // Отключение выделения текста
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+
+        // Отключение перетаскивания (для картинок, текста)
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</head>
+<body>
+    <div class="calibre" id="calibre_link-0">
 <div class="figure" id="calibre_link-695">
 <a href="http://www.storey.com/fresh-picks/" class="calibre1">
 <img alt="Storey&apos;s Fresh Picks" src="images/000091.png" class="calibre2" /></a>
@@ -4664,5 +4690,29 @@
 
 </div>
 
+<script>
+    // Запрет комбинации Ctrl+P / Cmd+P (печать)
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+            e.preventDefault();
+            alert('Печать этой страницы запрещена.');
+        }
+    });
 
-</body></html>
+    // Запрет комбинации Ctrl+S / Cmd+S (сохранение страницы)
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            alert('Сохранение страницы запрещено.');
+        }
+    });
+
+    // Блокировка диалога печати до его появления
+    window.onbeforeprint = function() {
+        alert('Печать этой страницы запрещена.');
+        return false; // Это ключевой момент для отмены печати
+    };
+</script>
+
+</body>
+</html>
