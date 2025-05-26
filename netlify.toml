@@ -1,0 +1,12 @@
+[build]
+publish = "."
+command = ""
+
+[functions]
+directory = "netlify/edge-functions"
+
+[[redirects]]
+from = "/*"
+to = "/.netlify/functions/check-referer"
+status = 200
+force = true

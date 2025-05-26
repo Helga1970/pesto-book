@@ -1,0 +1,19 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:creator opf:role="aut" opf:file-as="Неизвестный">Olwen Woodier</dc:creator>
+<dc:identifier opf:scheme="calibre" id="calibre_id">94cb4106-f441-4147-a10e-a66760865293</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">94cb4106-f441-4147-a10e-a66760865293</dc:identifier>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (8.4.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>2018-02-27T18:30:28+00:00</dc:date>
+        <dc:description>The classic pesto mixture of basil, garlic, olive oil, nuts, and Parmesan cheese is a popular favorite, but why stop at basil? Unlock the full potential of pesto by introducing into the mix other delicious herbs, including rosemary, mint, parsley, thyme, tarragon, and cilantro. This diverse collection of recipes for fresh pestos, pastes, and purées takes inspiration from cultures beyond Italy, with international delights such as Moroccan Chermoula, Brazilian Tempero Purée, and Peanut-Cilantro Pesto. In addition to 49 pesto recipes, 67 creative recipes for cooking with pesto show off how versatile these simple sauces can be.</dc:description>
+        <dc:publisher>Storey Publishing</dc:publisher>
+        <dc:title>The Pesto Cookbook</dc:title>
+<meta name="calibre:title_sort" content="Pesto Cookbook, The"/>
+<dc:subject>types of pesto;herb pestos;cooking with pesto;pesto recipes;how to make pesto;herbed oil recipes;homemade pesto;homemade mayonnaise;homemade vinaigrette</dc:subject>
+<dc:language>eng</dc:language>
+</metadata>
+    <guide>
+        <reference type="cover" title="Обложка" href="cover.jpg"/>
+    </guide>
+</package>
