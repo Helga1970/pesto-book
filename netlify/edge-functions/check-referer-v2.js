@@ -5,41 +5,41 @@ export default async (request, context) => {
   console.log('Incoming request URL:', requestUrl);
   console.log('Referer header:', referer);
 
+  // Разрешённые домены
   const allowedReferers = [
-    'pro-culinaria.ru',
-    'pro-culinaria.ru/rulang',
     'https://pro-culinaria.ru',
-    'https://pro-culinaria.ru/rulang',
+    'http://pro-culinaria.ru',
+    'https://www.pro-culinaria.ru',
+    'http://www.pro-culinaria.ru',
+    'pro-culinaria.ru',
+    'www.pro-culinaria.ru',
   ];
 
   if (referer) {
     try {
       const refererUrl = new URL(referer);
-      const refererOrigin = refererUrl.origin.replace(/^https?:\/\//, '');
-      const refererPathname = refererUrl.pathname.replace(/\/$/, '');
+      const refererOrigin = refererUrl.origin;
 
-      console.log('Parsed Referer Origin (without protocol):', refererOrigin);
-      console.log('Parsed Referer Pathname (normalized):', refererPathname);
+      console.log('Parsed Referer Origin:', refererOrigin);
 
-      const combinedReferer = refererOrigin + refererPathname;
-
-      const isAllowed = allowedReferers.includes(refererOrigin) || allowedReferers.includes(combinedReferer);
+      const isAllowed = allowedReferers.includes(refererOrigin);
 
       console.log('Is referer allowed?', isAllowed);
 
       if (isAllowed) {
-        // Разрешаем запрос пройти дальше
-        return;
+        // Если реферер разрешён, пропускаем запрос
+        return context.next();
       }
     } catch (e) {
-      console.error('Invalid referer URL or parsing error:', referer, e);
+      console.error("Invalid referer URL or parsing error:", referer, e);
     }
   } else {
     console.log('No referer header found.');
   }
 
+  // Если реферер отсутствует или не разрешён, блокируем доступ
   console.log('Blocking request: Referer not allowed or missing.');
-  return new Response('Доступ запрещен. Эта страница доступна только по ссылке с разрешенных источников.', {
+  return new Response('Access Denied: This page is only accessible from allowed sources.', {
     status: 403,
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
