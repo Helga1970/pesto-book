@@ -5,9 +5,6 @@ command = ""
 [functions]
 directory = "netlify/edge-functions"
 
-# Изменяем редирект для более явного соответствия
-[[redirects]]
-from = "/*"
-to = "/.netlify/edge-functions/check-referer" # Использование edge-functions вместо functions
-status = 200
-force = true
+# Удаляем редирект на Edge Function из netlify.toml
+# Edge Function будет вызываться автоматически Netlify для каждого запроса к сайту,
+# если она находится в папке edge-functions и не имеет Route.
