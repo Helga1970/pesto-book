@@ -15,31 +15,24 @@ export default async (request, context) => {
   if (referer) {
     try {
       const refererUrl = new URL(referer);
-      const refererOrigin = refererUrl.origin.replace(/\/$/, '');
-      const refererHost = refererUrl.hostname;
+      const refererOrigin = refererUrl.origin.replace(/^https?:\/\//, '');
       const refererPathname = refererUrl.pathname.replace(/\/$/, '');
 
-      console.log('Parsed Referer Origin:', refererOrigin);
-      console.log('Parsed Referer Host:', refererHost);
-      console.log('Parsed Referer Pathname:', refererPathname);
+      console.log('Parsed Referer Origin (without protocol):', refererOrigin);
+      console.log('Parsed Referer Pathname (normalized):', refererPathname);
 
-      // Собираем варианты для проверки
-      const variantsToCheck = [
-        refererHost,
-        refererHost + refererPathname,
-        refererOrigin,
-        refererOrigin + refererPathname,
-      ];
+      const combinedReferer = refererOrigin + refererPathname;
 
-      const isAllowed = variantsToCheck.some(v => allowedReferers.includes(v));
+      const isAllowed = allowedReferers.includes(refererOrigin) || allowedReferers.includes(combinedReferer);
 
       console.log('Is referer allowed?', isAllowed);
 
       if (isAllowed) {
-        return context.next();
+        // Разрешаем запрос пройти дальше
+        return;
       }
     } catch (e) {
-      console.error("Invalid referer URL or parsing error:", referer, e);
+      console.error('Invalid referer URL or parsing error:', referer, e);
     }
   } else {
     console.log('No referer header found.');
@@ -49,4 +42,7 @@ export default async (request, context) => {
   return new Response('Доступ запрещен. Эта страница доступна только по ссылке с разрешенных источников.', {
     status: 403,
     headers: {
-      'Content-Type': 'text
+      'Content-Type': 'text/plain; charset=utf-8',
+    },
+  });
+};
