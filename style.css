@@ -2947,3 +2947,25 @@
     margin-top: 5pt
     }
 
+/* --- Правила для печати (добавить в самый конец файла) --- */
+@media print {
+    /* Полностью скрываем содержимое страницы при печати */
+    body {
+        display: none !important;
+    }
+
+    /* Альтернативный вариант, если `display: none` вызывает проблемы:
+       можно сделать все элементы невидимыми и без фона/теней.
+       Если ты решишь использовать этот вариант, закомментируй (или удали)
+       строку `body { display: none !important; }` выше. */
+    /*
+    * {
+        visibility: hidden !important;
+        background: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        color: transparent !important;
+        -webkit-print-color-adjust: exact;
+    }
+    */
+}
