@@ -1,6 +1,3 @@
-[build]
-  publish = "."
-
 [[edge_functions]]
-  path = "/*"
-  function = "check-referer"
+path = "/*"
+function = "check-referer-v2"
