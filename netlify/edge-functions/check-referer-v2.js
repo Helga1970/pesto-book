@@ -1,76 +1,57 @@
 // netlify/edge-functions/check-referer-v2.js
 
-// Экспортируем асинхронную функцию по умолчанию, которую Netlify будет вызывать
 export default async (request, context) => {
-  // Получаем значение заголовка 'referer' из входящего запроса
   const referer = request.headers.get('referer');
-  // Получаем полный URL текущего запроса
   const requestUrl = request.url;
 
-  // Логирование для отладки (эти сообщения вы увидите в логах Netlify Deploy)
   console.log('Incoming request URL:', requestUrl);
   console.log('Referer header:', referer);
 
-  // Определяем список разрешённых доменов, с которых разрешён доступ
-  // Включаем как ваш основной сайт на Tilda, так и домен вашего Netlify сайта
-  // (чтобы он мог загружать свои собственные ресурсы - изображения, CSS и т.д.)
+  // Разрешённые домены
+  // Здесь мы оставляем те домены, которые разрешил ChatGPT,
+  // и добавляем домен самого Netlify сайта.
   const allowedReferers = [
     'https://pro-culinaria.ru',
-    'http://pro-culinaria.ru', // Включено на случай, если кто-то зайдёт по http
+    'http://pro-culinaria.ru',
     'https://www.pro-culinaria.ru',
-    'http://www.pro-culinaria.ru', // Включено на случай, если кто-то зайдёт по http с www
+    'http://www.pro-culinaria.ru',
+    'pro-culinaria.ru',         // Оставляем эти как есть, чтобы не нарушать логику ChatGPT
+    'www.pro-culinaria.ru',     // Оставляем эти как есть, чтобы не нарушать логику ChatGPT
 
     // !!! ВАЖНО !!!
-    // Добавляем домен самого Netlify сайта.
-    // Именно он будет реферером для запросов к вашим статическим файлам (изображениям, CSS),
-    // когда страница загружается на Netlify.
+    // Добавляем домен самого Netlify сайта, чтобы он мог загружать свои ресурсы (изображения, CSS).
+    // Когда браузер запрашивает картинки со страницы pesto-book.netlify.app,
+    // реферером будет сам pesto-book.netlify.app.
     'https://pesto-book.netlify.app',
-    'http://pesto-book.netlify.app', // Включено на случай, если сайт Netlify доступен по http
+    'http://pesto-book.netlify.app',
   ];
 
-  // Дополнительная проверка: если запрос идёт к ресурсу, который находится на том же домене,
-  // что и сама Edge Function (т.е., к вашим собственным файлам на pesto-book.netlify.app),
-  // то его нужно пропустить без проверки Referer.
-  // Это защищает от блокировки собственных статических файлов, если Referer отсутствует
-  // или по каким-то причинам не соответствует.
-  const requestOrigin = new URL(requestUrl).origin;
-  if (allowedReferers.includes(requestOrigin)) {
-      console.log('Request origin is allowed (self-access), skipping referer check.');
-      return context.next(); // Пропускаем запрос
-  }
-
-  // Если заголовок Referer присутствует в запросе
   if (referer) {
     try {
-      // Парсим Referer URL, чтобы получить только протокол и домен (origin)
       const refererUrl = new URL(referer);
       const refererOrigin = refererUrl.origin;
 
       console.log('Parsed Referer Origin:', refererOrigin);
 
-      // Проверяем, находится ли полученный Origin в списке разрешённых
+      // Проверяем, входит ли refererOrigin в список разрешённых доменов.
       const isAllowed = allowedReferers.includes(refererOrigin);
 
       console.log('Is referer allowed?', isAllowed);
 
       if (isAllowed) {
-        // Если реферер разрешён, пропускаем запрос дальше
+        // Если реферер разрешён, пропускаем запрос
         return context.next();
       }
     } catch (e) {
-      // Логируем ошибку, если Referer URL невалиден или произошла ошибка парсинга
       console.error("Invalid referer URL or parsing error:", referer, e);
     }
   } else {
-    // Если заголовок Referer отсутствует (например, прямой заход)
-    console.log('No referer header found.');
-    // В этом случае запрос будет заблокирован, если он не был пропущен предыдущей проверкой requestOrigin.
-    // Это стандартное поведение для блокировки прямого доступа или доступа без реферера,
-    // что обычно является желаемым для защиты контента.
+    // Если заголовок Referer отсутствует (например, прямой заход),
+    // текущая логика блокирует доступ.
+    console.log('No referer header found. Blocking.');
   }
 
-  // Если ни одно из условий пропуска не сработало (реферер отсутствует или не разрешён),
-  // блокируем доступ и возвращаем ошибку 403 Forbidden.
+  // Если реферер отсутствует или не разрешён, блокируем доступ
   console.log('Blocking request: Referer not allowed or missing.');
   return new Response('Access Denied: This page is only accessible from allowed sources.', {
     status: 403,
