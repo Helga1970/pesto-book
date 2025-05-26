@@ -5,14 +5,9 @@ command = ""
 [functions]
 directory = "netlify/edge-functions"
 
-# Используем маршрутизацию через специальный заголовок X-NF-Edge-Functions-Path
-# для активации Edge Function для всех путей.
-# Эта секция не нужна, если функция не имеет route в своём файле.
-# [[edge_functions]]
-# function = "check-referer"
-# path = "/*" # Закомментируем это, так как оно, похоже, вызывает проблему
-
-# Вместо этого, полагаемся на то, что функция находится в папке edge-functions
-# и её код будет выполняться для каждого запроса, если она не возвращает Response.
-# Если функция возвращает Response, она ПЕРЕХВАТЫВАЕТ запрос.
-# Если функция ничего не возвращает (или return;), то запрос продолжается к статике.
+[[redirects]]
+from = "/*"
+to = "/.netlify/edge-functions/check-referer-v2" # <- Это имя файла вашей Edge Function
+status = 200
+force = true
+edge = true
