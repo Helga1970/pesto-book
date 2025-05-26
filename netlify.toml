@@ -5,8 +5,9 @@ command = ""
 [functions]
 directory = "netlify/edge-functions"
 
+# Изменяем редирект для более явного соответствия
 [[redirects]]
 from = "/*"
-to = "/.netlify/functions/check-referer"
+to = "/.netlify/edge-functions/check-referer" # Использование edge-functions вместо functions
 status = 200
 force = true
