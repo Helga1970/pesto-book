@@ -20,10 +20,10 @@ export default async (request, context) => {
 
     // !!! ВАЖНО !!!
     // Добавляем домен самого Netlify сайта, чтобы он мог загружать свои ресурсы (изображения, CSS).
-    // Когда браузер запрашивает картинки со страницы pesto-book.netlify.app,
-    // реферером будет сам pesto-book.netlify.app.
-    'https://pesto-book.netlify.app',
-    'http://pesto-book.netlify.app',
+    // Когда браузер запрашивает картинки со страницы pesto-book.proculinaria-book.ru,
+    // реферером будет сам pesto-book.proculinaria-book.ru.
+    'pesto-book.proculinaria-book.ru',
+    'pesto-book.proculinaria-book.ru',
   ];
 
   if (referer) {
