@@ -1,4 +1,4 @@
-/ netlify/edge-functions/check-referer-v2.js
+// netlify/edge-functions/check-referer-v2.js
 
 export default async (request, context) => {
   const referer = request.headers.get('referer');
