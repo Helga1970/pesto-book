@@ -1,4 +1,4 @@
-// netlify/edge-functions/check-referer-v2.js
+/ netlify/edge-functions/check-referer-v2.js
 
 export default async (request, context) => {
   const referer = request.headers.get('referer');
@@ -20,10 +20,10 @@ export default async (request, context) => {
 
     // !!! ВАЖНО !!!
     // Добавляем домен самого Netlify сайта, чтобы он мог загружать свои ресурсы (изображения, CSS).
-    // Когда браузер запрашивает картинки со страницы pesto-book.proculinaria-book.ru,
-    // реферером будет сам pesto-book.proculinaria-book.ru.
-    'pesto-book.proculinaria-book.ru',
-    'pesto-book.proculinaria-book.ru',
+    // Когда браузер запрашивает картинки со страницы pesto-book.netlify.app,
+    // реферером будет сам pesto-book.netlify.app.
+    'https://pesto-book.netlify.app',
+    'http://pesto-book.netlify.app',
   ];
 
   if (referer) {
